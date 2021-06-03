@@ -1,6 +1,20 @@
 version: '3'
 
 services: 
+
+    front:
+        build: ./front
+        container_name: frontend
+        command: npm run dev
+        ports: 
+            - "3000:3000"
+        restart: unless-stopped
+        environment: 
+            - -p="3000"
+        tty: true
+        volumes: 
+            - ./front/pages:/usr/src/app/pages
+
     http-server: 
         build: ./back-main
         command: npm run start
