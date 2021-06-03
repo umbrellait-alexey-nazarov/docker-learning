@@ -1,0 +1,9 @@
+server {
+    listen 80;
+
+    server_name docker-learning.com;
+
+    location / {
+        proxy_pass http://front:3000;
+    }
+}

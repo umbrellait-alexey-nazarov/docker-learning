@@ -8,3 +8,5 @@ COPY package*.json /usr/src/app
 RUN npm ci -q
 
 COPY ./ /usr/src/app
+
+RUN npm run build

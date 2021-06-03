@@ -9,8 +9,6 @@ services:
         ports: 
             - "3000:3000"
         restart: unless-stopped
-        environment: 
-            - -p="3000"
 
     http-server: 
         build: ./back-main
@@ -56,6 +54,16 @@ services:
             - type: volume
               source: mongodb_httpServer
               target: /data/db
+
+    nginx:  
+        image: nginx:stable-alpine
+        container_name: nginx
+        ports: 
+            - "80:80"
+        volumes: 
+            - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+        depends_on: 
+            - front
 
 volumes: 
     mongodb_httpServer:
