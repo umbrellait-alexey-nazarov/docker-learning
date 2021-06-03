@@ -16,3 +16,10 @@ services:
 
     mongo-db: 
         image: mongo:latest
+        volumes: 
+            - type: volume
+              source: mongodb_httpServer
+              target: /data/db
+
+volumes: 
+    mongodb_httpServer:
