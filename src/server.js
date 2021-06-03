@@ -1,16 +1,8 @@
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import cors from 'koa-cors';
-import mongoose from 'mongoose';
 import winston from 'winston';
-import logger from './libs/logger';
-import config from '../config';
 import router from './routes'
-
-mongoose.connect(config.dbUri, { useNewUrlParser: true, useFindAndModify: false }, err => {
-  if (err) winston.error(err.toString());
-  else winston.info('Succesfull Connected to database');
-});
 
 const corsOptions = {
   methods: 'GET,PUT,POST,DELETE,OPTIONS',

@@ -4,8 +4,15 @@ services:
     http-server: 
         build: .
         command: npm run start
+        restart: unless-stopped
         ports: 
             - '8080:8080'
         environment: 
-            NODE_ENV: 'production'
-            HTTP_PORT: 8080
+            - NODE_ENV=production
+            - HTTP_PORT=8080
+            - DB_URI=mongodb://mongo-db:27017/app
+        depends_on: 
+            - mongo-db
+
+    mongo-db: 
+        image: mongo:latest
