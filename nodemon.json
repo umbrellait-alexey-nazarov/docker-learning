@@ -1,0 +1,5 @@
+{
+    "verbose": false,
+    "watch": ["src"],
+    "exec": "node --require @babel/register ./bin/http-server.js"
+}

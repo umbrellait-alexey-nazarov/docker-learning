@@ -7,4 +7,4 @@ COPY package*.json /usr/src/app/
 
 RUN npm ci -q
 
-COPY ./dist /usr/src/app/dist
+COPY ./ /usr/src/app/

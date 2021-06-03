@@ -18,6 +18,7 @@ app
     .use(router.routes())
     .use(router.allowedMethods())
 
+
 app.on('error', (err, ctx) => {
   if (err.logged || ctx.status >= 500) {
     winston.error({
