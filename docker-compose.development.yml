@@ -5,3 +5,9 @@ services:
         command: npm run dev
         volumes: 
             - ./src:/usr/src/app/src
+    
+    front:
+        command: npm run dev
+        tty: true
+        volumes: 
+            - ./front/pages:/usr/src/app/pages
