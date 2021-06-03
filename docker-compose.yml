@@ -2,8 +2,9 @@ version: '3'
 
 services: 
     http-server: 
-        build: .
+        build: ./back-main
         command: npm run start
+        container_name: docker-learning
         restart: unless-stopped
         ports: 
             - '8080:8080'
@@ -14,12 +15,37 @@ services:
         depends_on: 
             - mongo-db
 
+    http-server-second: 
+        build: ./second-main
+        command: npm run start
+        container_name: docker-learning-second
+        restart: unless-stopped
+        ports: 
+            - '8081:8081'
+        environment: 
+            - NODE_ENV=production
+            - HTTP_PORT=8081
+            - DB_URI=mongodb://mongo-second-db:27017/app
+        depends_on: 
+            - mongo-second-db
+
+
+    mongo-second-db: 
+        image: mongo:latest
+        container_name: docker-learning-db-second
+        volumes:
+            - type: volume
+              source: mongodb_secondHttpServer
+              target: /data/seconddb
+            
     mongo-db: 
         image: mongo:latest
-        volumes: 
+        container_name: docker-learning-db
+        volumes:
             - type: volume
               source: mongodb_httpServer
               target: /data/db
 
 volumes: 
     mongodb_httpServer:
+    mongodb_secondHttpServer:
