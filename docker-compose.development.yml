@@ -4,10 +4,30 @@ services:
     http-server: 
         command: npm run dev
         volumes: 
-            - ./src:/usr/src/app/src
-    
+            - ./back-main/src:/usr/src/app/src
+
+    http-server-second: 
+        command: npm run dev
+        volumes: 
+            - ./second-main/src:/usr/src/app/src
+        
+    nginx:  
+        image: nginx:stable-alpine
+        container_name: nginx
+        ports: 
+            - "80:80"
+        volumes: 
+            - ./nginx/nginx.conf.dev:/etc/nginx/conf.d/nginx.conf
+        depends_on: 
+            - front
+        networks: 
+            - docker-learning
+
     front:
         command: npm run dev
         tty: true
+        build: 
+            context: ./front
+            dockerfile: Dockerfile.dev
         volumes: 
             - ./front/pages:/usr/src/app/pages
