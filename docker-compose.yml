@@ -9,6 +9,8 @@ services:
         ports: 
             - "3000:3000"
         restart: unless-stopped
+        networks: 
+            - docker-learning
 
     http-server: 
         build: ./back-main
@@ -24,6 +26,8 @@ services:
             - SECOND_BACK_URL=http://http-server-second:8081
         depends_on: 
             - mongo-db
+        networks: 
+            - docker-learning
 
     http-server-second: 
         build: ./second-main
@@ -38,6 +42,8 @@ services:
             - DB_URI=mongodb://mongo-second-db:27017/app
         depends_on: 
             - mongo-second-db
+        networks: 
+            - docker-learning
 
 
     mongo-second-db: 
@@ -47,6 +53,8 @@ services:
             - type: volume
               source: mongodb_secondHttpServer
               target: /data/seconddb
+        networks: 
+            - docker-learning
             
     mongo-db: 
         image: mongo:latest
@@ -55,6 +63,8 @@ services:
             - type: volume
               source: mongodb_httpServer
               target: /data/db
+        networks: 
+            - docker-learning
 
     nginx:  
         image: nginx:stable-alpine
@@ -65,7 +75,13 @@ services:
             - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
         depends_on: 
             - front
+        networks: 
+            - docker-learning
 
 volumes: 
     mongodb_httpServer:
     mongodb_secondHttpServer:
+
+networks: 
+    docker-learning:
+        driver: bridge
